@@ -1,0 +1,11 @@
+{
+"plugins": [
+	[ "@babel/plugin-proposal-decorators", { "legacy": false,
+	"decoratorsBeforeExport": false,
+        "version": "jan-2019" } ]
+	],
+"presets": 
+	[
+	"@babel/preset-env", "@babel/preset-react"
+	]
+}

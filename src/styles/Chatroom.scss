@@ -1,0 +1,23 @@
+.Chatroom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.chatroomContainer {
+  background-color: white;
+  color: black;
+  height: 50vh;
+  width: 50vw;
+}
+
+ul {
+  display: flex;
+}
+
+li {
+  list-style: none;
+  padding: 0;
+  color: black;
+}
