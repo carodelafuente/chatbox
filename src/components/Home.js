@@ -10,6 +10,10 @@ class Home extends Component {
     this.userName = React.createRef();
   }
 
+  componentWillReact() {
+    store.storeMessages();
+  }
+
   submitUsername = (e) => {
     e.preventDefault();
     store.user = this.userName.current.value

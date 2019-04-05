@@ -1,12 +1,12 @@
-import { observable, action } from 'mobx';
+import { observable } from 'mobx';
 import {query} from './db.js';
 
 class Store {
 	@observable messages = [];
-	@observable user = ''
+	@observable user = null
 
-	@action storedMessages() {
-		this.messages = query("{allMessages{id,datetime,text,user}}").then(res => res.json).then(res => console.log(res))
+	storeMessages() {
+		this.messages = query("{allMessages{id,datetime,text,user}}").then(res => res.json)
 	}
 }
 

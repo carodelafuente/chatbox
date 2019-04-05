@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
 import '../styles/Chatroom.scss';
 import {query, mutation} from '../db.js'
 import store from '../store.js'
@@ -9,37 +10,38 @@ class Chatroom extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      messages: ['heero', 'oh']
-    }
-
     this.message = React.createRef();
-    this.appendMessage = this.appendMessage.bind(this)
     this.sendMessage = this.sendMessage.bind(this)
   }
 
   componentDidMount() {
-    console.log(store.messages)
+    query(`{ allMessages{
+      id,
+      text,
+      user} 
+    }`).then(({ data }) => {
+      store.messages = data.allMessages
+    })
   }
 
   sendMessage = (e) => {
     e.preventDefault();
-    this.state.messages.push(this.message.current.value)
-    // appendMessage()
-  }
-
-  appendMessage = function() {
-    this.state.messages.map((msg, i) => {
-      console.log(msg)
-      return <li key={i}>you: {msg}</li>
-    })
+    const user = store.user;
+    const text = this.message.current.value;
+    const mutationQuery = `createMessage(user: "${user}", text: "${text}") {
+      id,
+      user,
+      text
+    }`;
+    mutation(mutationQuery, user, text);
   }
 
 
   render() {
-    return (
+    if (store.user) {
+      return (
       <div className="Chatroom">
-        <h3> It me! </h3>
+        <h3> Chatbox </h3>
         <div className="chatroomContainer">
           <ul>
           </ul>
@@ -49,6 +51,9 @@ class Chatroom extends Component {
         </form>
       </div>
     );
+    } else {
+      <Redirect to="/" />
+    }
   }
 }
 
