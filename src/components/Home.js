@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react'
+import {query} from '../db.js'
 import store from '../store.js'
+import '../styles/Home.scss';
 
 @observer
 class Home extends Component {
@@ -10,8 +12,14 @@ class Home extends Component {
     this.userName = React.createRef();
   }
 
-  componentWillReact() {
-    store.storeMessages();
+  componentDidMount() {
+    query(`{ allMessages{
+      id,
+      text,
+      user} 
+    }`).then(({ data }) => {
+      store.messages = data.allMessages
+    })
   }
 
   submitUsername = (e) => {
@@ -23,8 +31,9 @@ class Home extends Component {
   render() {
     return (
       <div className="Home">
+      <h3 className="homeTitle"> Chatbox </h3>
         <form onSubmit={this.submitUsername}>
-          <input ref={this.userName} type='text' />
+          <input ref={this.userName} placeholder="username" type='text' />
         <button>enter chatbox!</button>
       </form>
       </div>

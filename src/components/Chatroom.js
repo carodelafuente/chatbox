@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom'
-import '../styles/Chatroom.scss';
 import {query, mutation} from '../db.js'
 import store from '../store.js'
 import { observer } from 'mobx-react'
+import '../styles/Chatroom.scss';
 
 @observer
 class Chatroom extends Component {
@@ -12,6 +12,7 @@ class Chatroom extends Component {
 
     this.message = React.createRef();
     this.sendMessage = this.sendMessage.bind(this)
+    this.renderMessages = this.renderMessages.bind(this)
   }
 
   componentDidMount() {
@@ -34,7 +35,16 @@ class Chatroom extends Component {
       text
     }`;
     mutation(mutationQuery, user, text);
+    console.log(store.messages)
   }
+
+  renderMessages() {
+    console.log(store.messages)
+    store.messages.map((msgObj) => {
+     return <li key={msgObj.id}>@{msgObj.user}: {msgObj.text}</li>
+    })
+  }
+
 
 
   render() {
@@ -43,11 +53,13 @@ class Chatroom extends Component {
       <div className="Chatroom">
         <h3> Chatbox </h3>
         <div className="chatroomContainer">
-          <ul>
+        <ul> {store.messages.map((msgObj) => {
+          return <li key={msgObj.id}>@{msgObj.user}: {msgObj.text}</li>
+        })}
           </ul>
         </div>
         <form onSubmit={this.sendMessage}>
-        <input ref={this.message} type='text' />
+        <input ref={this.message} placeholder={`@` + `${store.user}` + `:`} type='text' />
         </form>
       </div>
     );
