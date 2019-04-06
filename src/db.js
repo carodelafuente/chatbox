@@ -11,19 +11,17 @@ const query = (body) => fetch(API, {
 // .then(res => console.log(res.data))
 
 
-
-
 const mutation = (mutationQuery) => fetch(API, {
 	method: 'POST',
 	headers: {'Content-Type': 'application/json'},
 	body: JSON.stringify({
-		query: `mutation { 
+		query: `mutation {
 			${mutationQuery}
 		}`
 	})
 })
 .then(res => res.json())
-.then(data => console.log('mutation data returned:', data))
+// .then(data => console.log('mutation data returned:', data))
 
 
 export {query, mutation}

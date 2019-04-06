@@ -3,7 +3,7 @@ import {query} from './db.js';
 
 class Store {
 	@observable messages = [];
-	@observable user = false
+	@observable user = null
 
 	// storeMessages() {
 	// 	this.messages = query("{allMessages{id,datetime,text,user}}").then(res => res.json)

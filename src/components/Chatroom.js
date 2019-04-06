@@ -19,7 +19,7 @@ class Chatroom extends Component {
     query(`{ allMessages{
       id,
       text,
-      user} 
+      user}
     }`).then(({ data }) => {
       store.messages = data.allMessages
     })
@@ -34,8 +34,10 @@ class Chatroom extends Component {
       user,
       text
     }`;
-    mutation(mutationQuery, user, text);
-    console.log(store.messages)
+    mutation(mutationQuery, user, text).then(({ data }) => {
+      store.messages.push(data.allMessages)
+      console.log(store.messages)
+    })
   }
 
   renderMessages() {
@@ -48,7 +50,6 @@ class Chatroom extends Component {
 
 
   render() {
-    if (store.user) {
       return (
       <div className="Chatroom">
         <h3> Chatbox </h3>
@@ -63,9 +64,6 @@ class Chatroom extends Component {
         </form>
       </div>
     );
-    } else {
-      <Redirect to="/" />
-    }
   }
 }
 
