@@ -10,20 +10,15 @@ class Chatroom extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      messages: this.props.messages
+    }
+
     this.message = React.createRef();
+    this.chatbox = React.createRef();
     this.sendMessage = this.sendMessage.bind(this)
-    this.renderMessages = this.renderMessages.bind(this)
   }
 
-  componentDidMount() {
-    query(`{ allMessages{
-      id,
-      text,
-      user}
-    }`).then(({ data }) => {
-      store.messages = data.allMessages
-    })
-  }
 
   sendMessage = (e) => {
     e.preventDefault();
@@ -35,17 +30,10 @@ class Chatroom extends Component {
       text
     }`;
     mutation(mutationQuery, user, text).then(({ data }) => {
-      store.messages.push(data.allMessages)
-      console.log(store.messages)
+      this.setState({messages: this.props.messages.push(data.createMessage)})
     })
   }
 
-  renderMessages() {
-    console.log(store.messages)
-    store.messages.map((msgObj) => {
-     return <li key={msgObj.id}>@{msgObj.user}: {msgObj.text}</li>
-    })
-  }
 
 
 
@@ -53,8 +41,8 @@ class Chatroom extends Component {
       return (
       <div className="Chatroom">
         <h3> Chatbox </h3>
-        <div className="chatroomContainer">
-        <ul> {store.messages.map((msgObj) => {
+        <div ref={this.chatbox} className="chatroomContainer">
+        <ul> {this.props.messages.map((msgObj) => {
           return <li key={msgObj.id}>@{msgObj.user}: {msgObj.text}</li>
         })}
           </ul>

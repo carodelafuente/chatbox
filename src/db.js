@@ -8,7 +8,6 @@ const query = (body) => fetch(API, {
 	body: JSON.stringify({ query: `${body}` })
 })
 .then(res => res.json())
-// .then(res => console.log(res.data))
 
 
 const mutation = (mutationQuery) => fetch(API, {
@@ -21,7 +20,6 @@ const mutation = (mutationQuery) => fetch(API, {
 	})
 })
 .then(res => res.json())
-// .then(data => console.log('mutation data returned:', data))
 
 
 export {query, mutation}

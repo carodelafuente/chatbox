@@ -12,16 +12,6 @@ class Home extends Component {
     this.userName = React.createRef();
   }
 
-  componentDidMount() {
-    query(`{ allMessages{
-      id,
-      text,
-      user} 
-    }`).then(({ data }) => {
-      store.messages = data.allMessages
-    })
-  }
-
   submitUsername = (e) => {
     e.preventDefault();
     store.user = this.userName.current.value
