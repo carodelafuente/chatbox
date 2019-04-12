@@ -38,7 +38,8 @@ class Chatroom extends Component {
 
 
   render() {
-      return (
+      if (store.user !== '') {
+        return (
       <div className="Chatroom">
         <h3> Chatbox </h3>
         <div ref={this.chatbox} className="chatroomContainer">
@@ -52,7 +53,10 @@ class Chatroom extends Component {
         </form>
       </div>
     );
+  } else {
+    return <Redirect to="/"/>
   }
+      }
 }
 
 export default Chatroom;
