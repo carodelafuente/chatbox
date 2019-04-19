@@ -14,8 +14,18 @@ class Home extends Component {
 
   submitUsername = (e) => {
     e.preventDefault();
-    store.user = this.userName.current.value
-    this.props.history.push(`/chatroom`)
+
+    const re = /[^A-Za-z0-9]+/;
+
+    if (!re.test(this.userName.current.value)) {
+      store.user = this.userName.current.value
+      this.props.history.push(`/chatroom`)
+    } else {
+      alert('You must enter a valid username. Letters and numbers only!')
+      return
+    }
+
+
   }
 
   render() {

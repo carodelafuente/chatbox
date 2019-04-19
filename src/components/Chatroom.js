@@ -39,6 +39,7 @@ class Chatroom extends Component {
 
   render() {
       if (store.user !== '') {
+        console.log(store.user)
         return (
       <div className="Chatroom">
         <h3> Chatbox </h3>
@@ -54,6 +55,7 @@ class Chatroom extends Component {
       </div>
     );
   } else {
+    alert('You didn\'t enter a username.')
     return <Redirect to="/"/>
   }
       }
